@@ -13,6 +13,13 @@ steps:
 
 - script: |
     pwd
-    tar -zcp --exclude='.git' -f nodegoat.tar.gz /home/vsts/work/1/s/NodeGoat
+    - task: ArchiveFiles@2
+      inputs:
+        rootFolderOrFile: '$(Build.BinariesDirectory)'
+        includeRootFolder: true
+        archiveType: 'zip'
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
+        verbose: true
     ls -lah
   displayName: 'Run a multi-line script'
