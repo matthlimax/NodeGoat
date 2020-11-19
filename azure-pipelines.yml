@@ -4,15 +4,26 @@
 # https://aka.ms/yaml
 
 trigger:
-- main
+- master
 
 pool:
   vmImage: 'ubuntu-18.04'
 
 steps:
+- script:
+    sleep 1
+  displayName: 'Build'
+
+- task: ArchiveFiles@2
+  inputs:
+    rootFolderOrFile: '$(Build.Repository.LocalPath)'
+    includeRootFolder: true
+    archiveType: 'zip'
+    archiveFile: '$(Build.Repository.LocalPath)/$(Build.BuildId).zip'
+    replaceExistingArchive: true
+  displayName: 'Packaging ZIP file'
 
 - script: |
-    pwd
-    echo $(Build.BinariesDirectory)
-    ls -lah
-  displayName: 'Run a multi-line script'
+    echo DEPLOY
+    sleep 2
+  displayName: 'Deploy'
