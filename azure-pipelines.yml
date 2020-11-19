@@ -24,6 +24,7 @@ steps:
   displayName: 'Packaging ZIP file'
 
 - script: |
+    ls -lh
     echo DEPLOY
     sleep 2
   displayName: 'Deploy'
