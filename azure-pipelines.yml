@@ -23,6 +23,22 @@ steps:
     replaceExistingArchive: true
   displayName: 'Packaging ZIP file'
 
+- task: Veracode@3
+  inputs:
+    ConnectionDetailsSelection: 'Credentials'
+    apiId: '$(VERACODE_API_ID)'
+    apiKey: '$(VERACODE_API_KEY)'
+    veracodeAppProfile: '$(system.teamProject)'
+    version: '$(build.buildNumber)'
+    filepath: '$(Build.Repository.LocalPath)/$(Build.BuildId).zip'
+    createSandBox: false
+    createProfile: false
+    failTheBuildIfVeracodeScanDidNotInitiate: false
+    scanStatusCheckInterval: '60'
+    importResults: true
+    failBuildOnPolicyFail: true
+  displayName: 'Veracode Static Scan'
+
 - script: |
     ls -lh
     echo DEPLOY
