@@ -32,7 +32,7 @@ steps:
     version: '$(build.buildNumber)'
     filepath: '$(Build.Repository.LocalPath)/$(Build.BuildId).zip'
     createSandBox: false
-    createProfile: false
+    createProfile: true
     failTheBuildIfVeracodeScanDidNotInitiate: false
     scanStatusCheckInterval: '60'
     importResults: true
