@@ -1,0 +1,9 @@
+kind: pipeline
+type: docker
+name: nodegoat
+
+steps:
+  - name: static analysis scan
+    image: openjdk:8
+    commands:
+    - echo hello world
