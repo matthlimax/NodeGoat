@@ -12,6 +12,7 @@ steps:
   - name: SAST
     image: openjdk:8
     commands:
+    - VERSION_SCAN=date
     - ls -lah | grep nodegoat-veracode.tar.gz
     - wget https://search.maven.org/remotecontent?filepath=com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.11.7.2/vosp-api-wrappers-java-20.11.7.2-dist.zip -O vosp-api-wrappers-java-20.11.7.2-dist.zip
     - unzip vosp-api-wrappers-java-20.11.7.2-dist.zip
@@ -22,6 +23,6 @@ steps:
       -createprofile false
       -criticality VeryHigh
       -filepath "nodegoat-veracode.tar.gz"
-      -version "${DONE_BUILD_NUMBER}"
+      -version "${VERSION_SCAN}"
     - sleep 3
     - echo Scan finished
