@@ -3,7 +3,13 @@ type: docker
 name: nodegoat
 
 steps:
-  - name: static analysis scan
+  - name: package
     image: openjdk:8
     commands:
-    - echo hello world
+    - tar -cvzf nodegoat-veracode.tar.gz --exclude=./nodegoat-veracode.tar.gz ./*
+    - ls -lah
+  
+  - name: SAST
+    image: openjdk:8
+    commands:
+    - ls -lah
