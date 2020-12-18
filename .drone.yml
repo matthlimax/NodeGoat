@@ -2,12 +2,6 @@ kind: pipeline
 type: docker
 name: nodegoat
 
-environment:
-  VERACODE_API_ID:
-    from_secret: vera_id
-  VERACODE_API_KEY:
-    from_secret: vera_key
-
 steps:
   - name: package
     image: openjdk:8
@@ -17,8 +11,12 @@ steps:
   
   - name: SAST
     image: openjdk:8
+    environment:
+      VERACODE_API_ID:
+        from_secret: vera_id
+      VERACODE_API_KEY:
+        from_secret: vera_key
     commands:
-
     - echo $${VERACODE_API_ID}
     - echo ${VERACODE_API_ID}
     - echo "$${VERACODE_API_ID}"
