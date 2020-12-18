@@ -11,18 +11,15 @@ steps:
   
   - name: SAST
     image: openjdk:8
-    environment:
-    VERACODE_API_ID:
-      from_secret: vera_id
-    VERACODE_API_KEY:
-      from_secret: vera_key
     commands:
+    - echo $${VERACODE_API_ID}
+    - echo ${VERACODE_API_ID}
     - ls -lah | grep nodegoat-veracode.tar.gz
     - wget https://search.maven.org/remotecontent?filepath=com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.11.7.2/vosp-api-wrappers-java-20.11.7.2-dist.zip -O vosp-api-wrappers-java-20.11.7.2-dist.zip
     - unzip vosp-api-wrappers-java-20.11.7.2-dist.zip
     - java -jar VeracodeJavaAPI.jar -action uploadandscan
-      -vid 'VERACODE_API_ID'
-      -vkey 'VERACODE_API_KEY'
+      -vid VERACODE_API_ID
+      -vkey VERACODE_API_KEY
       -appname NodeGoat-AD
       -createprofile false
       -criticality VeryHigh
@@ -30,4 +27,9 @@ steps:
       -version $DRONE_BUILD_NUMBER
     - sleep 2
     - echo Scan finished
+    environment:
+    VERACODE_API_ID:
+      from_secret: vera_id
+    VERACODE_API_KEY:
+      from_secret: vera_key
     
