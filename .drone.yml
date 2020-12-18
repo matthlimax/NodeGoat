@@ -12,17 +12,17 @@ steps:
   - name: SAST
     image: openjdk:8
     environment:
-    USERNAME:
+    VERACODE_API_ID:
       from_secret: veracode_api_id
-    PASSWORD:
+    VERACODE_API_KEY:
       from_secret: veracode_api_key
     commands:
     - ls -lah | grep nodegoat-veracode.tar.gz
     - wget https://search.maven.org/remotecontent?filepath=com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.11.7.2/vosp-api-wrappers-java-20.11.7.2-dist.zip -O vosp-api-wrappers-java-20.11.7.2-dist.zip
     - unzip vosp-api-wrappers-java-20.11.7.2-dist.zip
     - java -jar VeracodeJavaAPI.jar -action uploadandscan
-      -vid a9ef97253734582ae872a6d910a9ba1d
-      -vkey 371e991eaac83f6b152f3d1433a285868cc3f96e9a6b4aac309dabebe8a1038edcab0afeef73674919089e3df38dd1d52f2f893da093c31caa5fb6576dc8aa27
+      -vid "${VERACODE_API_ID}"
+      -vkey "${VERACODE_API_KEY}"
       -appname NodeGoat-AD
       -createprofile false
       -criticality VeryHigh
