@@ -13,6 +13,8 @@ steps:
     image: openjdk:8
     commands:
     - VERSION_SCAN=date
+    - echo $VERSION_SCAN
+    - echo $DRONE_BUILD_NUMBER
     - ls -lah | grep nodegoat-veracode.tar.gz
     - wget https://search.maven.org/remotecontent?filepath=com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.11.7.2/vosp-api-wrappers-java-20.11.7.2-dist.zip -O vosp-api-wrappers-java-20.11.7.2-dist.zip
     - unzip vosp-api-wrappers-java-20.11.7.2-dist.zip
