@@ -20,7 +20,7 @@ steps:
       -vkey "${VERACODE_API_KEY}"
       -appname NodeGoat-AD
       -createprofile false
-      -criticality VeryHigh, High, Medium
+      -criticality VeryHigh
       -filepath "nodegoat-veracode.tar.gz"
       -version "${DONE_BUILD_NUMBER}"
     - sleep 3
