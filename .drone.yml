@@ -28,6 +28,6 @@ steps:
       -criticality VeryHigh
       -filepath "nodegoat-veracode.tar.gz"
       -version $DRONE_BUILD_NUMBER
-    - sleep 3
+    - sleep 2
     - echo Scan finished
     
