@@ -11,9 +11,16 @@ steps:
   
   - name: SAST
     image: openjdk:8
+    environment:
+    USERNAME:
+      from_secret: veracode_api_id
+    PASSWORD:
+      from_secret: veracode_api_key
     commands:
     - echo $DRONE_BUILD_NUMBER
     - echo $${VERACODE_API_ID}
+    - echo veracode_api_id
+    - echo $veracode_api_id
     - ls -lah | grep nodegoat-veracode.tar.gz
     - wget https://search.maven.org/remotecontent?filepath=com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.11.7.2/vosp-api-wrappers-java-20.11.7.2-dist.zip -O vosp-api-wrappers-java-20.11.7.2-dist.zip
     - unzip vosp-api-wrappers-java-20.11.7.2-dist.zip
