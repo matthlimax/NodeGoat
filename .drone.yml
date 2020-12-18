@@ -21,8 +21,8 @@ steps:
     - wget https://search.maven.org/remotecontent?filepath=com/veracode/vosp/api/wrappers/vosp-api-wrappers-java/20.11.7.2/vosp-api-wrappers-java-20.11.7.2-dist.zip -O vosp-api-wrappers-java-20.11.7.2-dist.zip
     - unzip vosp-api-wrappers-java-20.11.7.2-dist.zip
     - java -jar VeracodeJavaAPI.jar -action uploadandscan
-      -vid "$${USERNAME}"
-      -vkey "$${PASSWORD}"
+      -vid "$$USERNAME"
+      -vkey "$$PASSWORD"
       -appname NodeGoat-AD
       -createprofile false
       -criticality VeryHigh
