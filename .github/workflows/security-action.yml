@@ -21,8 +21,8 @@ jobs:
         path: NodeGoat/veracode.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
     - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
       with:
-        vid: '${{ secrets.VERACODE_ID }}'
-        vkey: '${{ secrets.VERACODE_KEY }}'
+        vid: ${{ secrets.VERACODE_ID }}
+        vkey: ${{ secrets.VERACODE_KEY }}
         criticality: 'VeryHigh'
         appname: 'NodeGoat-Jenkins'
         createprofile: false
