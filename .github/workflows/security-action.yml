@@ -11,8 +11,8 @@ jobs:
         filename: 'veracode.zip'
         path: .
     - run: |
-        grep veracode.zip
-      
+        ls -l 
+        
     - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
       with: 
         java-version: '8'
