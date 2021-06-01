@@ -11,8 +11,8 @@ jobs:
         filename: 'veracode.zip'
         path: .
     - run: |
-        ls -l 
-        
+        grep veracode.zip
+      
     - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
       with: 
         java-version: '8'
@@ -28,8 +28,9 @@ jobs:
         createprofile: false
         filepath: 'NodeGoat/veracode.zip'
         version: ${{ github.run_id }}' 
-        #exclusions: '*.git* /*node_modules/* .editorconfig'
-        # - uses: actions/checkout@v2
-         # - uses: actions/setup-node@v1
-         # - run: npm install -g bats
-         # - run: bats -v
+        
+    #exclusions: '*.git* /*node_modules/* .editorconfig'
+    # - uses: actions/checkout@v2
+     # - uses: actions/setup-node@v1
+     # - run: npm install -g bats
+     # - run: bats -v
