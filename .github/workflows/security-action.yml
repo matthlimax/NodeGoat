@@ -11,9 +11,25 @@ jobs:
         filename: 'veracode.zip'
         path: .
     - run: |
-        ls -l
+        grep veracode.zip
+      
+    - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
+      with: 
+        java-version: '8'
+    - uses: actions/upload-artifact@v2 # Copy files from repository to docker container so the next uploadandscan action can access them.
+      with:
+        path: NodeGoat/veracode.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
+    - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
+      with:
+        vid: '${{ secrets.VERACODE_ID }}'
+        vkey: '${{ secrets.VERACODE_KEY }}'
+        criticality: 'VeryHigh'
+        appname: 'NodeGoat-Jenkins'
+        createprofile: false
+        filepath: 'NodeGoat/veracode.zip'
+        version: ${{ github.run_id }}' 
         #exclusions: '*.git* /*node_modules/* .editorconfig'
-    # - uses: actions/checkout@v2
-     # - uses: actions/setup-node@v1
-     # - run: npm install -g bats
-     # - run: bats -v
+        # - uses: actions/checkout@v2
+         # - uses: actions/setup-node@v1
+         # - run: npm install -g bats
+         # - run: bats -v
