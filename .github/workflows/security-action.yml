@@ -1,6 +1,18 @@
 name: security-action
 on: [push]
+
 jobs:   
+
+  library-componets-security-analisys:
+    runs-on: ubuntu-latest
+    steps:
+    - shell: bash
+      env:
+        SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
+      run: |
+        export EXTRA_ARGS='--update-advisor'
+        curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan $EXTRA_ARGS || true
+        
   application-security:
     runs-on: ubuntu-latest
     steps:
@@ -10,9 +22,7 @@ jobs:
       with:
         filename: 'veracode.zip'
         path: .
-  #  - run: |
-  #      ls -l
-      
+    
     - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
       with: 
         java-version: '8'
@@ -28,9 +38,3 @@ jobs:
         createprofile: false
         filepath: 'veracode.zip'
         version: ${{ github.run_id }}' 
-        
-    #exclusions: '*.git* /*node_modules/* .editorconfig'
-    # - uses: actions/checkout@v2
-     # - uses: actions/setup-node@v1
-     # - run: npm install -g bats
-     # - run: bats -v
