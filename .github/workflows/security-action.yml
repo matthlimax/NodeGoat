@@ -17,8 +17,7 @@ jobs:
         
         #export EXTRA_ARGS='--update-advisor'
         #curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan $EXTRA_ARGS
-         echo $env.GITHUB_EVENT_NAME
-         echo $env.GITHUB_JOB
+         env
          
   application-security:
     runs-on: ubuntu-latest
