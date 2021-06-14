@@ -57,3 +57,4 @@ jobs:
         createprofile: false
         filepath: 'veracode.zip'
         version: ${{ github.run_id }}'
+        scantimeout: 30
