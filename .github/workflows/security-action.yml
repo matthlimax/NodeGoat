@@ -24,26 +24,36 @@ jobs:
         
         export EXTRA_ARGS='--update-advisor'
         curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan $EXTRA_ARGS || true
-    - uses: actions/upload-artifact@v2 # Copy files from repository to docker container so the next uploadandscan action can access them.
-      with:
-        path: NodeGoat/veracode.zip
         
   application-security:
     runs-on: ubuntu-latest
     needs: [library-componets-security-analisys]
     steps:
     - uses: actions/checkout@master
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'veracode.zip'
+        path: .
+    
+    - shell: bash
+      env:
+        VERACODE_ID: ${{ secrets.VERACODE_ID }}
+        VERACODE_KEY:  ${{ secrets.VERACODE_KEY }}
+          
     - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
       with: 
         java-version: '8'
     - uses: actions/upload-artifact@v2 # Copy files from repository to docker container so the next uploadandscan action can access them.
       with:
         path: NodeGoat/veracode.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
-    - run: ls -l
 
-#    - name: Archive Release
-#      uses: thedoctor0/zip-release@master
-#      with:
-#        filename: 'veracode.zip'
-#        path: .
-
+    - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
+      with:
+        vid: '${VERACODE_ID}'
+        vkey: '${VERACODE_KEY}'
+        criticality: 'VeryHigh'
+        appname: 'NodeGoat-Jenkins'
+        createprofile: false
+        filepath: 'veracode.zip'
+        version: ${{ github.run_id }}'
