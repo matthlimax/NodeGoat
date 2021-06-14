@@ -36,10 +36,10 @@ jobs:
         filename: 'veracode.zip'
         path: .
     
-    - shell: bash
-      env:
-        VERACODE_ID: ${{ secrets.VERACODE_ID }}
-        VERACODE_KEY:  ${{ secrets.VERACODE_KEY }}
+ #   - shell: bash
+ #     env:
+ #       VERACODE_ID: ${{ secrets.VERACODE_ID }}
+ #       VERACODE_KEY:  ${{ secrets.VERACODE_KEY }}
           
     - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
       with: 
@@ -50,8 +50,8 @@ jobs:
 
     - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
       with:
-        vid: '${VERACODE_ID}'
-        vkey: '${VERACODE_KEY}'
+        vid: 'a9ef97253734582ae872a6d910a9ba1d'
+        vkey: '371e991eaac83f6b152f3d1433a285868cc3f96e9a6b4aac309dabebe8a1038edcab0afeef73674919089e3df38dd1d52f2f893da093c31caa5fb6576dc8aa27'
         criticality: 'VeryHigh'
         appname: 'NodeGoat-Jenkins'
         createprofile: false
