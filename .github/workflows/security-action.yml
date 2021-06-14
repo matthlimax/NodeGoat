@@ -6,6 +6,13 @@ jobs:
   library-componets-security-analisys:
     runs-on: ubuntu-latest
     steps:
+    - uses: actions/checkout@master
+    - name: Archive Release
+      uses: thedoctor0/zip-release@master
+      with:
+        filename: 'veracode.zip'
+        path: .
+        
     - shell: bash
       env:
         SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
