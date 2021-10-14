@@ -23,7 +23,9 @@ jobs:
       with:
         args: -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
     - name: Unzip the Pipeline Scanner
-      run: unzip -qq pipeline-scan-LATEST.zip
+    - uses: montudor/action-zip@v1
+      with:
+        args: unzip -qq -n pipeline-scan-LATEST.zip -d .
     - shell: bash
       env:
         VID: ${{ secrets.VID }}
