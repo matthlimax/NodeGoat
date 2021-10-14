@@ -30,4 +30,5 @@ jobs:
         VKEY: ${{ secrets.VKEY }}
       run: |
         ls -l
+        java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_ID}}" --veracode_api_key "${{secrets.VERACODE_KEY}}" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
         
