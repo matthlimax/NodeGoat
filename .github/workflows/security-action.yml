@@ -19,15 +19,15 @@ jobs:
       with:
         path: veracode.zip
     - name: Download the Pipeline Scanner
+      env:
+        VID: ${{ secrets.VID }}
+        VKEY: ${{ secrets.VKEY }}
       uses: wei/curl@master
       with:
         args: -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
     - name: Unzip the Pipeline Scanner
       run: unzip -qq -n pipeline-scan-LATEST.zip
     - shell: bash
-      env:
-        VID: ${{ secrets.VID }}
-        VKEY: ${{ secrets.VKEY }}
       run: |
         ls -l
         java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_ID}}" --veracode_api_key "${{secrets.VERACODE_KEY}}" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
