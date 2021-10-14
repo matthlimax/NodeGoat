@@ -2,8 +2,8 @@ name: security-action
 on: [push]
 
 jobs:
-
-  Application-Packaging:
+        
+  Veracode-SAST-Pipeline-Scan:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@master
@@ -12,17 +12,10 @@ jobs:
       with:
         filename: 'veracode.zip'
         path: .
-        
-  Veracode-SAST-Pipeline-Scan:
-    runs-on: ubuntu-latest
-    needs: [Application-Packaging]
-    steps:
     - uses: actions/setup-java@v1
       with:
         java-version: 1.8
-    - uses: actions/upload-artifact@v2
-      with:
-        path: veracode.zip
+
     - name: Download the Pipeline Scanner
       uses: wei/curl@master
       with:
