@@ -25,7 +25,14 @@ jobs:
       uses: wei/curl@master
       with:
         args: -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-    - name: Unzip the Pipeline Scanner
-      run: unzip pipeline-scan-LATEST.zip
-    - name: Run Pipeline Scanner
-      run: java -Dpipeline.debug=true -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_ID}}" --veracode_api_key "${{secrets.VERACODE_KEY}}" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
+    - name: unzip and run pipeline-scan
+    - uses: montudor/action-zip@v1
+      with:
+        args: unzip -qq pipeline-scan-LATEST.zip -d .
+    - shell: bash
+      env:
+        VID: ${{ secrets.VID }}
+        VKEY: ${{ secrets.VKEY }}
+      run: |
+        ls -l | grep pipeline-scan
+        java -jar pipeline-scan.jar --veracode_api_id "${{secrets.VERACODE_ID}}" --veracode_api_key "${{secrets.VERACODE_KEY}}" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
