@@ -24,8 +24,8 @@ jobs:
         args: -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
     - name: Unzip the Pipeline Scanner
       run: unzip -qq -n pipeline-scan-LATEST.zip
-    - shell: bash
     - name: Veracode SAST - Pipeline Scan
+    - shell: bash
       run: |
         java -jar pipeline-scan.jar --veracode_api_id "${{ secrets.VERACODE_ID }}" --veracode_api_key "${{ secrets.VERACODE_KEY }}" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
         
