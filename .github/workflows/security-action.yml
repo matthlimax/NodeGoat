@@ -25,10 +25,7 @@ jobs:
     - name: Unzip the Pipeline Scanner
       run: unzip -qq -n pipeline-scan-LATEST.zip
     - shell: bash
-      env:
-        VERACODE_ID: ${{ secrets.VERACODE_ID }}
-        VERACODE_KEY: ${{ secrets.VERACODE_KEY }}
       run: |
         ls -l
-        java -jar pipeline-scan.jar --veracode_api_id "$VERACODE_ID" --veracode_api_key "$VERACODE_KEY" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
+        java -jar pipeline-scan.jar --veracode_api_id "${{ secrets.VERACODE_ID }}" --veracode_api_key "${{ secrets.VERACODE_KEY }}" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
         
