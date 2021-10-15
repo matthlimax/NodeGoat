@@ -52,6 +52,7 @@ jobs:
         
   Veracode-SAST-Sandbox-Scan:
     runs-on: ubuntu-latest
+    needs: [Veracode-SAST-Pipeline-Scan]
     steps:
     - uses: actions/checkout@master
     - name: Archive Release
