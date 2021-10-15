@@ -27,5 +27,5 @@ jobs:
     - shell: bash
       run: |
         ls -l
-        java -jar pipeline-scan.jar --veracode_api_id "${{ secrets.VERACODE_ID }}" --veracode_api_key "${{ secrets.VERACODE_KEY }}" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
+        java -jar pipeline-scan.jar --veracode_api_id "a9ef97253734582ae872a6d910a9ba1d" --veracode_api_key "371e991eaac83f6b152f3d1433a285868cc3f96e9a6b4aac309dabebe8a1038edcab0afeef73674919089e3df38dd1d52f2f893da093c31caa5fb6576dc8aa27" --file "veracode.zip" --fail_on_severity="Very High, High" --issue_details true
         
