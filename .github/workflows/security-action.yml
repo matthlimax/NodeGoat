@@ -20,93 +20,14 @@ jobs:
         export SRCCLR_SCM_REF=${{ github.workflow }}
         export SRCCLR_SCM_REF_TYPE="branch"
         export SRCCLR_SCM_REV=${{ github.run_id }}
-        
-        export EXTRA_ARGS='--update-advisor'
-        curl -sSL https://download.sourceclear.com/ci.sh | bash -s scan $EXTRA_ARGS
-        
-  Veracode-SAST-Pipeline-Scan:
-    runs-on: ubuntu-latest
-    needs: [Veracode-Software-Composition-Analisys]
-    steps:
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'veracode.zip'
-        path: .
-    - uses: actions/setup-java@v1
-      with:
-        java-version: 1.8
-    - uses: actions/upload-artifact@v2 
-      with:
-        path: veracode.zip
-    - name: Download the Pipeline Scanner
-      uses: wei/curl@master
-      with:
-        args: -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-    - name: Unzip the Pipeline Scanner
-      run: unzip -qq -n pipeline-scan-LATEST.zip
-    - shell: bash
-      run: |
-        java -jar pipeline-scan.jar --veracode_api_id "${{ secrets.VERACODE_ID }}" --veracode_api_key "${{ secrets.VERACODE_KEY }}" --file "veracode.zip" --issue_details true || true
-        
-  Veracode-SAST-Sandbox-Scan:
-    runs-on: ubuntu-latest
-    needs: [Veracode-SAST-Pipeline-Scan]
-    steps:
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'veracode.zip'
-        path: .
-            
-    - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
-      with: 
-        java-version: '8'
-    - uses: actions/upload-artifact@v2 # Copy files from repository to docker container so the next uploadandscan action can access them.
-      with:
-        path: NodeGoat/veracode.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
+        export SRCCLR_SCM_TYPE="GITHUB"
+        export SRCCLR_SCM_TOKEN="{{ secrets.SRCCLR_SCM_TOKEN }}"
+        export EXTRA_ARGS='--update-advisor --pull-request'
 
-    - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above.
-      with:
-        vid: '${{ secrets.VERACODE_ID }}'
-        vkey: '${{ secrets.VERACODE_KEY }}'
-        criticality: 'VeryHigh'
-        createsandbox: 'false'
-        sandboxname: 'SANDBOX_1'
-        appname: 'NodeGoat-Demo'
-        createprofile: 'false'
-        filepath: 'veracode.zip'
-        deleteIncompleteScan: 'true'
-        version: ${{ github.run_id }}' #scantimeout: 30
-  
-  Veracode-SAST-Policy-Scan:
-    runs-on: ubuntu-latest
-    needs: [Veracode-SAST-Sandbox-Scan]
-    steps:
-    - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'veracode.zip'
-        path: .
-            
-    - uses: actions/setup-java@v1 # Make java accessible on path so the uploadandscan action can run.
-      with: 
-        java-version: '8'
-    - uses: actions/upload-artifact@v2 # Copy files from repository to docker container so the next uploadandscan action can access them.
-      with:
-        path: NodeGoat/veracode.zip # Wildcards can be used to filter the files copied into the container. See: https://github.com/actions/upload-artifact
+        git config --global user.email $git_user_name
+        git config --global user.name  $git_user_email
+        git remote set-url origin https://github.com/lucasferreiram3/NodeGoat.git
+        git checkout -f feature-ejs
 
-    - uses: veracode/veracode-uploadandscan-action@master # Run the uploadandscan action. Inputs are described above. 
-      with:
-        vid: '${{ secrets.VERACODE_ID }}'
-        vkey: '${{ secrets.VERACODE_KEY }}'
-        criticality: 'VeryHigh'
-        appname: 'NodeGoat-Demo'
-        createprofile: 'true'
-        filepath: 'veracode.zip'
-        deleteIncompleteScan: 'true'
-        version: ${{ github.run_id }}'
-        scantimeout: 30
+        curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan $EXTRA_ARGS
+        
