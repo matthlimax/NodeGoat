@@ -33,7 +33,7 @@ jobs:
 
     - name: scan 
       run: |
-          zip -r -v nodegoat.zip . -i '*.js' '*.html'
+          zip -r -v nodegoat.zip .
           java -jar /opt/veracode/api-wrapper.jar -vid "${{ secrets.VERACODE_ID }}"}" -vkey "${{ secrets.VERACODE_KEY }}" -action UploadAndScan -createprofile false -appname "NodeGoat-Demo"  
   
   Veracode-SAST-Pipeline-Scan:
@@ -48,6 +48,6 @@ jobs:
 
       - name: scan 
         run: |
-          zip -r -v nodegoat.zip . -i '*.js' '*.html'  
+          zip -r -v nodegoat.zip . 
           java -jar /opt/veracode/pipeline-scan.jar -vid "${{ secrets.VERACODE_ID }}" -vkey "${{ secrets.VERACODE_KEY }}" -f nodegoat.zip -p "NodeGoat-Demo" -pn "Veracode Recommended Medium"
     continue-on-error: true
