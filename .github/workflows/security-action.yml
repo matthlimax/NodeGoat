@@ -17,7 +17,7 @@ jobs:
         export SRCCLR_SCM_REF_TYPE="branch"
         export SRCCLR_SCM_REV=${{ github.run_id }}
         export SRCCLR_SCM_TYPE="GITHUB"
-        export EXTRA_ARGS='--update-advisor --uri-as-name'
+        export EXTRA_ARGS='--update-advisor --uri-as-name' 
 
         curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan $EXTRA_ARGS
         
