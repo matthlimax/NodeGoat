@@ -30,15 +30,10 @@ jobs:
       options: --user root
     steps:
     - uses: actions/checkout@master
-    - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'nodegoat.zip'
-        path: .
-
     - name: scan 
       run: |
-          java -jar /opt/veracode/api-wrapper.jar -vid "${{ secrets.VERACODE_ID }}"}" -vkey "${{ secrets.VERACODE_KEY }}" -action UploadAndScan -createprofile false -appname "NodeGoat-Demo"  
+          zip -r -v nodegoat.zip . -i '*.js' '*.html'
+          java -jar /opt/veracode/api-wrapper.jar -vid "${{ secrets.VERACODE_ID }}" -vkey "${{ secrets.VERACODE_KEY }}" -action UploadAndScan -createprofile false -appname "NodeGoat-Demo"  
   
   Veracode-SAST-Pipeline-Scan:
     runs-on: ubuntu-latest
@@ -49,13 +44,9 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@master
-      - name: Archive Release
-        uses: thedoctor0/zip-release@master
-        with:
-          filename: 'nodegoat.zip'
-          path: .
           
       - name: scan 
         run: |
+          zip -r -v nodegoat.zip . -i '*.js' '*.html'
           java -jar /opt/veracode/pipeline-scan.jar -vid "${{ secrets.VERACODE_ID }}" -vkey "${{ secrets.VERACODE_KEY }}" -f nodegoat.zip -p "NodeGoat-Demo" -pn "Veracode Recommended Medium"
     continue-on-error: true
