@@ -1,5 +1,7 @@
 name: security-action
-on: [push]
+on:
+  push:
+    branches: [feature-ejs]
 
 jobs:
 
@@ -8,26 +10,14 @@ jobs:
     steps:
     - uses: actions/checkout@master
     - name: Archive Release
-      uses: thedoctor0/zip-release@master
-      with:
-        filename: 'veracode.zip'
-        path: .
-    - shell: bash
       env:
         SRCCLR_API_TOKEN: ${{ secrets.SRCCLR_API_TOKEN }}
-        SRCCLR_SCM_URL: 'https://github.com/lucasferreiram3/NodeGoat.git'
       run: |
         export SRCCLR_SCM_REF=${{ github.workflow }}
         export SRCCLR_SCM_REF_TYPE="branch"
         export SRCCLR_SCM_REV=${{ github.run_id }}
         export SRCCLR_SCM_TYPE="GITHUB"
-        export SRCCLR_SCM_TOKEN="{{ secrets.SRCCLR_SCM_TOKEN }}"
         export EXTRA_ARGS='--update-advisor --uri-as-name'
-
-        git config --global user.email $git_user_name
-        git config --global user.name  $git_user_email
-        git remote set-url origin https://github.com/lucasferreiram3/NodeGoat.git
-        git checkout -f feature-ejs
 
         curl -sSL https://download.sourceclear.com/ci.sh | bash -s -- scan $EXTRA_ARGS
         
