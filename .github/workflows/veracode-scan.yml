@@ -1,0 +1,6 @@
+name: Veracode Scan 
+on:
+  push:
+    branches: [ teste-branch ]
+  pull_request:
+    branches: [ teste-branch ]
