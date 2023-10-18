@@ -17,7 +17,7 @@ Veracode-SAST-Pipeline-Scan:
       uses: actions/checkout@master
 # abaixo o código está criando um arquivo zip, depois defindo o que será excluido (-x) e o que será adicionado (-i)
 # após, o código utiliza a ferramenta "java , jar" para executar a verradura no caminho /opt/veracode/pipeline-scan.jar.
-# Toda a varredura é feita nas informações fornecidas "VERACODE_ID" e "VERACODE_KEY"
+# Toda a varredura é feita utlizando as credenciais fornecidas "VERACODE_ID" e "VERACODE_KEY"
     - name: scan
       run: |
          zip -r uploadToVeracode.zip . -x "*node_modules" "*.git" -i "*.js"  "*.html"  "*.htm"  "*.ts"  "*.tsx"  "*.json"  "*.css"  "*.jsp"  "*.vue"
