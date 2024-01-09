@@ -1,4 +1,4 @@
-name: Veracode Scan 
+name: Veracode Scan GitLab
 on:
   push:
     branches: [ feature-ejs]
