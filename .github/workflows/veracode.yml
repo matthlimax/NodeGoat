@@ -79,8 +79,8 @@ jobs:
          with:
            appname: autopackage_js
            filepath: verascan/veracode-auto-pack-NodeGoat-js.zip
-           vid: "${{ secrets.VERACODE_ID }}"
-           vkey: "${{ secrets.VERACODE_KEY }}"
+           vid: "${{ secrets.VID }}"
+           vkey: "${{ secrets.VKEY }}"
            createProfile: true
            deleteincompletescan: 2
 
@@ -103,7 +103,7 @@ jobs:
            filepath: verascan/veracode-auto-pack-NodeGoat-js.zip
            sandboxName: funcionalidade nova 
            createSandBox: true
-           vid: "${{ secrets.VERACODE_ID }}"
-           vkey: "${{ secrets.VERACODE_KEY }}"
+           vid: "${{ secrets.VID }}"
+           vkey: "${{ secrets.VKEY }}"
            createProfile: true
            deleteincompletescan: 2
