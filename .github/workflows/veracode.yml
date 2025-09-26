@@ -44,7 +44,7 @@ jobs:
         run: |
           curl -O -L https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
           unzip -u pipeline-scan-LATEST.zip
-          java -jar pipeline-scan.jar -vid "${{ secrets.VERACODE_ID }}" -vkey "${{ secrets.VERACODE_KEY }}" --file verascan/veracode-auto-pack-NodeGoat-js.zip
+          java -jar pipeline-scan.jar -vid "${{ secrets.VID }}" -vkey "${{ secrets.VKEY }}" --file verascan/veracode-auto-pack-NodeGoat-js.zip
         continue-on-error: false
 
 
